@@ -1,22 +1,25 @@
 ---
+import "../styles/styles.css"
 interface Props {
 	title: string;
+	descriptions: string
+	image?: string
 }
 
-const { title } = Astro.props;
+const { title, descriptions, image } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={descriptions} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title>{title ?? 'COUNTRY APP YOUTUBE'}</title>
 	</head>
-	<body>
+	<body class="min-h-screen mx-auto dark:text-neutral-300 transition-colors duration-300" >
 		<slot />
 	</body>
 </html>

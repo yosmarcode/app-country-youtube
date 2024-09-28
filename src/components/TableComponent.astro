@@ -1,0 +1,181 @@
+---
+import { currencyFormatter } from '../core/helpers/currencyFormatter'
+import type { ICountry } from '../core/types'
+
+interface Props {
+    dataSource: ICountry | any
+}
+
+const {dataSource} = Astro.props as Props
+---
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Capital
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {dataSource?.capital ?? '---'}
+                </th>
+                <td class="px-6 py-4" />
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Región
+                </th>
+                <td class="px-6 py-4">
+                    {dataSource?.region ?? '---'}
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Sub Región
+                </th>
+                <td class="px-6 py-4">
+                    {dataSource?.subregion ?? '---'}
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
+                    Lenguaje
+                </th>
+                <td class="px-6 py-4" >
+                    {dataSource?.languages ? (Object.values(dataSource?.languages).map((row) => row).join(',') ?? '') : '---'}
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Continente
+                </th>
+                <td class="px-6 py-4">
+                    {dataSource?.subregion ?? '---'}
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Codigo Area
+                </th>
+                <td class="px-6 py-4">
+                    
+                    {dataSource?.idd?.suffixes && ((dataSource?.idd?.root ?? '') + dataSource?.idd?.suffixes.map((row: any) => row))} 
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Independiente
+                </th>
+                <td class="px-6 py-4 ">
+                    {dataSource?.independent ? 'SI' : 'NO'}
+               
+                </td>
+                <td class="px-6 py-4">
+                  
+                    <p style="font-size: 10px; font-weight: 400;">Estado de independencia ISO 3166-1 (el país se considera un estado soberano)
+                    </p>
+                </td>
+               
+            </tr>
+
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Estado Miembro ONU
+                </th>
+                <td class="px-6 py-4 " >
+               
+                    {dataSource?.unMember ? 'SI' : 'NO'}
+               
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Zona Horaria
+                </th>
+                <td class="px-6 py-4 " >
+               
+                    {dataSource?.timezones ?? '---'}
+               
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Moneda
+                </th>
+                <td class="px-6 py-4">
+                    {dataSource?.currencies && Object.values(dataSource?.currencies).map((row: any) => Object.values(row).map((r: any) => r))}
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Población del Pais
+                </th>
+                <td class="px-6 py-4 " >
+             
+                    {currencyFormatter("", dataSource?.population ?? 0)}
+        
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+         
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Tamaño geográfico
+                </th>
+                <td class="px-6 py-4 " >
+             
+                    {currencyFormatter("", dataSource?.area ?? 0) + 'km²'}
+        
+                </td>
+                <td class="px-6 py-4" />
+               
+            </tr>
+            {dataSource?.borders && (
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Paises Vecinos
+                </th>
+                <td class="px-6 py-4 w-full" >
+                <ul class="grid grid-cols-5 gap-5 ">
+                   {dataSource?.borders.map((r: any, i: number) => (
+                    <a href=`/country/${r}`>
+                   <div class="flex w-16 h-12 p-3 gap-3 bg-zinc-800 hover:bg-gray-600 rounded-lg border-2 border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/40 hover:cursor-pointer hover:transition-colors hover:-translate-y-1 hover:scale-110 duration-300">
+                        {r}
+                    </div>
+                </a>
+                    ))}
+                </ul>   
+                    
+                </td>
+                <td class="px-6 py-4" />
+               
+             </tr>
+            )}
+     
+            
+      
+        </tbody>
+    </table>
+</div>

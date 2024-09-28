@@ -1,0 +1,103 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { ICountry } from "../../core/types";
+import { URL_API } from "../../services";
+import BackgroundImagComponent from "../../components/BackgroundImagComponent.astro";
+import ImageComponent from "../../components/ImageComponent.astro";
+import TableComponent from "../../components/TableComponent.astro";
+
+export async function getStaticPaths() {
+  const urlApi = new URL(`${URL_API}`);
+  let _response: ICountry[] = [];
+  const response =
+    (await fetch(`${urlApi}all`, {})
+      .then((resp: Response) => resp.json())
+      .catch((err: void) => {
+        const error: Error | any = err;
+        console.log("publications error Api restcountries: ", error.message);
+      })) ?? [];
+
+  for (let index = 0; index < response.length; index++) {
+    const element = response[index];
+
+    interface Body {
+      cca2: string;
+    }
+
+    let body: Body = { cca2: element.cca2 };
+    _response.push(body as any);
+  }
+
+  return _response.flatMap(({ cca2 }) => {
+    return [{ params: { cca2: cca2 } }];
+  });
+}
+
+const { cca2 } = Astro.params;
+
+if (cca2 === null || !cca2) {
+  return new Response(JSON.stringify("there are no parameters"), {
+    status: 404,
+  });
+}
+
+if (cca2 === undefined) {
+  return new Response(JSON.stringify("server error"), { status: 500 });
+}
+
+const dataResults = await fetch(`${URL_API}alpha/${cca2}`)
+  .then((resp: Response) => resp.json())
+  .catch((err: void) => {
+    const error: Error | any = err;
+    console.log(
+      "publications error Api restcountries Details Country Error:: ",
+      error.message
+    );
+  });
+---
+
+<Layout
+  title={dataResults[0]?.name?.common}
+  ,
+  descriptions={"Pagina información de Paises " + dataResults[0]?.flags?.alt}
+>
+  <BackgroundImagComponent dataFlags={dataResults[0].flags?.svg} />
+  <main
+    class="z-10 max-w-screen-full lg:max-w-screen-xl rounded-2xl bg-gray-800 border-2 border-indigo-500 shadow-2xl shadow-indigo-500/40"
+  >
+    <div class="grid grid-cols-6 gap-4">
+      <span class="text-white text-8xl font-bold col-start-1 col-end-7"
+        >{dataResults[0]?.name?.common ?? ""}
+        {dataResults[0]?.flag}
+        <b>{dataResults[0]?.altSpellings[0]}</b></span
+      >
+    </div>
+    <div class="grid grid-cols-3 gap-2 my-10">
+        <div class="col-span-3 lg:col-span-1 gap-3 sticky top-0 ">
+            <ImageComponent
+            urlSrc={dataResults[0]?.flags?.svg ?? ""}
+            alt={dataResults[0]?.flags?.alt ?? ""}
+            width={400}
+            height={400}
+          />
+          {
+            Object.values(dataResults[0]?.coatOfArms).length > 0 && (
+              <div class="my-4">
+                <ImageComponent
+                  urlSrc={dataResults[0]?.coatOfArms?.svg ?? ""}
+                  alt={dataResults[0]?.name?.common ?? ""}
+                  width={400}
+                  height={400}
+                />
+              </div>
+            )
+          }
+        </div>
+  
+       <div class="col-span-3 lg:col-span-2 md:col-span-2 rounded-lg  w-full">
+        <TableComponent dataSource={dataResults[0] as ICountry} />
+      </div>
+    </div>
+   
+  </main>
+</Layout>

@@ -1,0 +1,25 @@
+---
+    interface Props {
+        dataFlags: string
+    }
+
+    const {dataFlags}  = Astro.props as Props
+---
+
+<div class=`
+relative 
+w-full
+h-screen
+max-h-[20rem]
+p-1
+lg:p-36
+overflow-hidden
+block
+bg-cover
+bg-no-repeat
+bg-center
+
+
+` style=`background-image: url(${dataFlags}); z-index: 0; mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent)`>
+<slot />
+</div>
