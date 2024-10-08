@@ -17,7 +17,7 @@ const MainComponent = (response) => {
     }
 
   return (
-
+    <div>
     <main className="bg-gray-900 dark:bg-gray-800">
 
       <h1 className="ml-4 text-start">Lista de Paises</h1>
@@ -37,13 +37,15 @@ const MainComponent = (response) => {
           Buscar
         </button>
       </div>
-
+        <div>
       <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7 lg:gap-6 xl:grid-cols-8">
         {Object.values(dataResponse).map((row, i) => (
           <CardComponent {...row} key={i + 1} />
         ))}
       </ul>
+      </div>
     </main>
+    </div>
 
   );
 };
