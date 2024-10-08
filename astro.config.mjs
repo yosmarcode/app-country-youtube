@@ -9,4 +9,5 @@ export default defineConfig({
         include: ['**/react/*'],
         experimentalReactChildren: true
       })],
+    output: 'hybrid'
 });

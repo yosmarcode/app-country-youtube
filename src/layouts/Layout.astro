@@ -1,4 +1,5 @@
 ---
+import { fade, ViewTransitions } from "astro:transitions";
 import "../styles/styles.css"
 interface Props {
 	title: string;
@@ -18,8 +19,9 @@ const { title, descriptions, image } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title ?? 'COUNTRY APP YOUTUBE'}</title>
+		<ViewTransitions />
 	</head>
-	<body class="min-h-screen mx-auto dark:text-neutral-300 transition-colors duration-300" >
+	<body class="min-h-screen mx-auto dark:text-neutral-300 transition-colors duration-300" transition:animate={fade({ duration: '0.5s'  })} >
 		<slot />
 	</body>
 </html>
